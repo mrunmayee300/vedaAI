@@ -78,6 +78,45 @@ cp apps/web/.env.example apps/web/.env
 docker compose up --build
 ```
 
+## Cloud Deployment
+
+This repository includes `vercel.json` for the Next.js app and `render.yaml` for the API.
+
+Recommended hosted setup:
+
+- Web: Vercel
+- API: Render Docker web service
+- MongoDB: MongoDB Atlas
+- Redis: Upstash or Redis Cloud
+
+Deploy API first so you know the production API URL. In Render, create a Blueprint from `render.yaml` or create a Docker web service manually with:
+
+```text
+Dockerfile path: apps/server/Dockerfile
+Docker context: .
+Health check path: /health
+```
+
+Set API env vars:
+
+```env
+NODE_ENV=production
+PORT=4000
+CLIENT_URL=https://your-vercel-app.vercel.app
+MONGODB_URI=mongodb+srv://...
+REDIS_URL=rediss://...
+OPENAI_API_KEY=sk-...
+```
+
+Deploy web on Vercel with the root project directory and the included `vercel.json`. Set:
+
+```env
+NEXT_PUBLIC_API_URL=https://your-api.onrender.com/api
+NEXT_PUBLIC_SOCKET_URL=https://your-api.onrender.com
+```
+
+After the Vercel URL is final, update `CLIENT_URL` in Render to that exact URL and redeploy the API.
+
 ## API Flow
 
 1. `POST /api/assignments` accepts title, due date, instructions, question type JSON, and optional file.
