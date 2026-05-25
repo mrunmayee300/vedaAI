@@ -24,8 +24,8 @@ const schema = z.object({
     z.object({
       type: z.enum(["mcq", "short", "diagram", "numerical", "long"]),
       label: z.string().min(2),
-      count: z.coerce.number().int().positive(),
-      marks: z.coerce.number().int().positive(),
+      count: z.number().int().positive(),
+      marks: z.number().int().positive(),
     }),
   ).min(1),
 });
