@@ -41,7 +41,7 @@ export const createGenerationWorker = () => {
       await pushProgress(assignmentId, "generating", 55, "Generating assessment with AI");
       await job.updateProgress(55);
 
-      const generatedPaper = await generateAssessment(generationInput, assignment.uploadedContent?.text);
+      const generatedPaper = await generateAssessment(generationInput, assignment.uploadedContent?.text ?? undefined);
 
       await pushProgress(assignmentId, "parsing", 78, "Validating structured JSON output");
       await job.updateProgress(78);

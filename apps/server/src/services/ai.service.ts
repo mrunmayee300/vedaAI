@@ -7,14 +7,15 @@ import { parseGeneratedPaper } from "./parser.js";
 import type { ValidatedGeneratedPaper } from "./validator.js";
 
 const openai = env.OPENAI_API_KEY ? new OpenAI({ apiKey: env.OPENAI_API_KEY }) : null;
+const localDifficulties = ["easy", "moderate", "challenging"] as const;
 
 const buildLocalPaper = (assignment: CreateAssignmentInput): ValidatedGeneratedPaper => {
   const sections = assignment.questionTypes.map((questionType, sectionIndex) => ({
     title: `Section ${String.fromCharCode(65 + sectionIndex)}`,
     instruction: `Attempt all ${questionType.label.toLowerCase()}. Each question carries ${questionType.marks} marks.`,
     questions: Array.from({ length: questionType.count }, (_, index) => ({
-      text: `[${index % 3 === 0 ? "Easy" : index % 3 === 1 ? "Moderate" : "Challenging"}] ${questionType.label} ${index + 1}: Explain the key concept and support your answer with a clear example.`,
-      difficulty: index % 3 === 0 ? "easy" : index % 3 === 1 ? "moderate" : "challenging",
+      text: `[${localDifficulties[index % 3]}] ${questionType.label} ${index + 1}: Explain the key concept and support your answer with a clear example.`,
+      difficulty: localDifficulties[index % 3],
       marks: questionType.marks,
       type: questionType.type,
     })),

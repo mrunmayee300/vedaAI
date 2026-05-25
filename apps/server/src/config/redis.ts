@@ -1,8 +1,8 @@
-import IORedis from "ioredis";
+import { Redis } from "ioredis";
 import { env } from "./env.js";
 
-export const redisConnection = new IORedis(env.REDIS_URL, {
+export const redisConnection = new Redis(env.REDIS_URL, {
   maxRetriesPerRequest: null,
 });
 
-export const redisCache = new IORedis(env.REDIS_URL);
+export const redisCache = new Redis(env.REDIS_URL);

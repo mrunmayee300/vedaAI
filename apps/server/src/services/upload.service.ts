@@ -1,9 +1,13 @@
+import { createRequire } from "node:module";
+
+const require = createRequire(import.meta.url);
+const pdfParse = require("pdf-parse") as (buffer: Buffer) => Promise<{ text: string }>;
+
 export const extractUploadedText = async (file?: Express.Multer.File) => {
   if (!file) return undefined;
 
   if (file.mimetype === "application/pdf") {
-    const pdfParseModule = await import("pdf-parse");
-    const parsed = await pdfParseModule.default(file.buffer);
+    const parsed = await pdfParse(file.buffer);
     return parsed.text.slice(0, 16000);
   }
 

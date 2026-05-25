@@ -2,6 +2,7 @@ import { AssignmentModel } from "../models/Assignment.js";
 import { createAssignment, regenerateAssignment } from "../services/assignment.service.js";
 import { createAssessmentPdf } from "../services/pdf.service.js";
 import { extractUploadedText } from "../services/upload.service.js";
+import { validateGeneratedPaper } from "../services/validator.js";
 import { AppError } from "../utils/AppError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { sendSuccess } from "../utils/apiResponse.js";
@@ -61,7 +62,7 @@ export const exportAssignmentPdf = asyncHandler(async (req, res) => {
   const assignment = await AssignmentModel.findById(id).lean();
   if (!assignment?.generatedPaper) throw new AppError("Generated paper is not ready", 409);
 
-  const buffer = await createAssessmentPdf(assignment.generatedPaper);
+  const buffer = await createAssessmentPdf(validateGeneratedPaper(assignment.generatedPaper));
   res.setHeader("Content-Type", "application/pdf");
   res.setHeader("Content-Disposition", `attachment; filename="${assignment.title.replace(/\W+/g, "-")}.pdf"`);
   return res.send(buffer);
