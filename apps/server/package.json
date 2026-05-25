@@ -1,0 +1,47 @@
+{
+  "name": "@veda/server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/server.js",
+    "lint": "eslint \"src/**/*.ts\"",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "bullmq": "latest",
+    "compression": "latest",
+    "cors": "latest",
+    "date-fns": "latest",
+    "dotenv": "latest",
+    "express": "latest",
+    "helmet": "latest",
+    "ioredis": "latest",
+    "mongoose": "latest",
+    "morgan": "latest",
+    "multer": "latest",
+    "openai": "latest",
+    "pdf-lib": "latest",
+    "pdf-parse": "latest",
+    "socket.io": "latest",
+    "uuid": "latest",
+    "zod": "latest"
+  },
+  "devDependencies": {
+    "@eslint/js": "latest",
+    "@types/compression": "latest",
+    "@types/cors": "latest",
+    "@types/express": "latest",
+    "@types/morgan": "latest",
+    "@types/multer": "latest",
+    "@types/node": "latest",
+    "@types/uuid": "latest",
+    "eslint": "latest",
+    "tsx": "latest",
+    "typescript": "latest",
+    "typescript-eslint": "latest"
+  }
+}

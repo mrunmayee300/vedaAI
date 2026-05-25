@@ -1,0 +1,24 @@
+{
+  "name": "veda-ai-assessment-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Production-grade AI assessment creator platform for teachers.",
+  "workspaces": [
+    "apps/web",
+    "apps/server"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev --workspace apps/server\" \"npm run dev --workspace apps/web\"",
+    "build": "npm run build --workspace apps/server && npm run build --workspace apps/web",
+    "lint": "npm run lint --workspace apps/server && npm run lint --workspace apps/web",
+    "format": "prettier --write \"**/*.{ts,tsx,js,json,md,css}\"",
+    "typecheck": "npm run typecheck --workspace apps/server && npm run typecheck --workspace apps/web"
+  },
+  "devDependencies": {
+    "concurrently": "latest",
+    "prettier": "latest"
+  },
+  "engines": {
+    "node": ">=20.11.0"
+  }
+}
